@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ملا حسن الخادم - تطبيق الأناشيد واللطميات الحسينية</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #000000;
+            color: #ffffff;
+            overflow-x: hidden;
+            transition: all 0.3s ease;
+        }
+
+        body.light-mode {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: #ffffff;
+            color: #000000;
+            border: 2px solid #000000;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        body.light-mode .theme-toggle {
+            background: #000000;
+            color: #ffffff;
+            border-color: #ffffff;
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            padding: 100px 20px 80px;
+            background: #000000;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 3px solid #ffffff;
+        }
+
+        body.light-mode .header {
+            background: #ffffff;
+            border-bottom-color: #000000;
+        }
+
+        .app-icon {
+            width: 160px;
+            height: 160px;
+            border-radius: 35px;
+            margin: 0 auto 35px;
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+            animation: float 3s ease-in-out infinite;
+            border: 4px solid #ffffff;
+        }
+
+        body.light-mode .app-icon {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-color: #000000;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-25px); }
+        }
+
+        h1 {
+            font-size: 4em;
+            margin-bottom: 25px;
+            color: #ffffff;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        body.light-mode h1 {
+            color: #000000;
+        }
+
+        .tagline {
+            font-size: 1.4em;
+            margin-bottom: 35px;
+            line-height: 1.9;
+            color: #ffffff;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        body.light-mode .tagline {
+            color: #000000;
+        }
+
+        .download-btn {
+            display: inline-block;
+            padding: 22px 55px;
+            background: #ffffff;
+            color: #000000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.5em;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            margin-top: 25px;
+            border: 2px solid #ffffff;
+        }
+
+        body.light-mode .download-btn {
+            background: #000000;
+            color: #ffffff;
+            border-color: #000000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-7px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.5);
+        }
+
+        body.light-mode .download-btn:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .coming-soon {
+            margin-top: 20px;
+            font-size: 1.1em;
+            color: #cccccc;
+            font-style: italic;
+        }
+
+        body.light-mode .coming-soon {
+            color: #666666;
+        }
+
+        .coming-soon span {
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        body.light-mode .coming-soon span {
+            color: #000000;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #000000;
+        }
+
+        body.light-mode .features {
+            background: #ffffff;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3em;
+            margin-bottom: 70px;
+            color: #ffffff;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        body.light-mode .section-title {
+            color: #000000;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .feature-card {
+            background: #000000;
+            padding: 45px;
+            border-radius: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid #ffffff;
+        }
+
+        body.light-mode .feature-card {
+            background: #ffffff;
+            border-color: #000000;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(255, 255, 255, 0.2);
+        }
+
+        body.light-mode .feature-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3.5em;
+            margin-bottom: 25px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.6em;
+            margin-bottom: 18px;
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        body.light-mode .feature-card h3 {
+            color: #000000;
+        }
+
+        .feature-card p {
+            line-height: 1.7;
+            color: #ffffff;
+            font-size: 1.05em;
+        }
+
+        body.light-mode .feature-card p {
+            color: #000000;
+        }
+
+        /* Screenshots Section */
+        .screenshots {
+            padding: 100px 20px;
+            background: #000000;
+        }
+
+        body.light-mode .screenshots {
+            background: #ffffff;
+        }
+
+        .screenshots-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+
+        .screenshot-item {
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            border: 3px solid #ffffff;
+            max-width: 450px;
+            flex: 1 1 400px;
+        }
+
+        body.light-mode .screenshot-item {
+            border-color: #000000;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .screenshot-item:hover {
+            transform: scale(1.08) translateY(-10px);
+            box-shadow: 0 25px 60px rgba(255, 255, 255, 0.4);
+        }
+
+        body.light-mode .screenshot-item:hover {
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .screenshot-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Download Section */
+        .download-section {
+            padding: 100px 20px;
+            text-align: center;
+            background: #000000;
+        }
+
+        body.light-mode .download-section {
+            background: #ffffff;
+        }
+
+        .download-info {
+            max-width: 650px;
+            margin: 0 auto 50px;
+            background: #000000;
+            padding: 50px;
+            border-radius: 25px;
+            border: 2px solid #ffffff;
+        }
+
+        body.light-mode .download-info {
+            background: #ffffff;
+            border-color: #000000;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 0;
+            border-bottom: 1px solid #ffffff;
+            transition: all 0.3s ease;
+        }
+
+        body.light-mode .info-item {
+            border-bottom-color: #000000;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #ffffff;
+            font-size: 1.1em;
+        }
+
+        body.light-mode .info-label {
+            color: #000000;
+        }
+
+        .info-value {
+            color: #ffffff;
+            font-size: 1.1em;
+        }
+
+        body.light-mode .info-value {
+            color: #000000;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 50px 20px;
+            text-align: center;
+            background: #000000;
+            border-top: 3px solid #ffffff;
+        }
+
+        body.light-mode .footer {
+            background: #ffffff;
+            border-top-color: #000000;
+        }
+
+        .footer p {
+            margin: 12px 0;
+            color: #ffffff;
+            font-size: 1.05em;
+        }
+
+        body.light-mode .footer p {
+            color: #000000;
+        }
+
+        .footer p:first-child {
+            font-weight: 600;
+            font-size: 1.15em;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.8em;
+            }
+            
+            .tagline {
+                font-size: 1.2em;
+            }
+            
+            .download-btn {
+                padding: 18px 40px;
+                font-size: 1.3em;
+            }
+            
+            .section-title {
+                font-size: 2.2em;
+            }
+
+            .screenshots-container {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .screenshot-item {
+                max-width: 100%;
+            }
+
+            .theme-toggle {
+                top: 10px;
+                left: 10px;
+                padding: 10px 20px;
+                font-size: 1em;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feature-card, .screenshot-item {
+            animation: fadeInUp 0.8s ease-out backwards;
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
+        .feature-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .screenshot-item:nth-child(1) { animation-delay: 0.2s; }
+        .screenshot-item:nth-child(2) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <span id="theme-icon">☀️</span>
+        <span id="theme-text">الوضع النهاري</span>
+    </button>
+
+    <!-- Header Section -->
+    <div class="header">
+        <img src="favicon.jpg" alt="أيقونة تطبيق ملا حسن الخادم" class="app-icon">
+        <h1>ملا حسن الخادم</h1>
+        <div class="tagline">
+            🎵 استمتع بأناشيد ولطميات الرادود ملا حسن الخادم الأصيلة<br>
+            تطبيق احترافي يعمل بدون إنترنت | بحث سريع | تحديثات مستمرة
+        </div>
+        <a href="https://github.com/husseinalhalwas2026-prog/husseinalhalwas.github.io/releases/latest/download/default.apk" class="download-btn">
+            📲 حمّل التطبيق الآن - مجاناً
+        </a>
+        <div class="coming-soon">
+            <span>⏳ قريباً:</span> التحميل عبر ميديا فاير
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="features">
+        <h2 class="section-title">✨ مميزات التطبيق</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📴</div>
+                <h3>يعمل بدون إنترنت</h3>
+                <p>استمع لجميع أناشيد ولطميات ملا حسن الخادم في أي وقت وأي مكان بدون الحاجة للاتصال بالإنترنت</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>سرعة البحث الفائقة</h3>
+                <p>نظام بحث سريع وذكي يتيح لك الوصول الفوري لأي أنشودة أو لطمية تبحث عنها بكل سهولة</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🎵</div>
+                <h3>جودة صوتية عالية</h3>
+                <p>جميع الأناشيد واللطميات بجودة صوتية نقية وواضحة لتجربة استماع مميزة ومريحة</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🔄</div>
+                <h3>تحديثات مستمرة</h3>
+                <p>نضيف محتوى جديد بانتظام مع تحسينات دورية للأداء لضمان أفضل تجربة استخدام</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screenshots Section -->
+    <div class="screenshots">
+        <h2 class="section-title">📱 لقطات من التطبيق</h2>
+        <div class="screenshots-container">
+            <div class="screenshot-item">
+                <img src="hassan-khadem.jpg" alt="واجهة تطبيق ملا حسن الخادم الرئيسية">
+            </div>
+            <div class="screenshot-item">
+                <img src="hassan.jpg" alt="شاشة مشغل الأناشيد في التطبيق">
+            </div>
+        </div>
+    </div>
+
+    <!-- Download Section -->
+    <div class="download-section">
+        <h2 class="section-title">📥 معلومات التحميل</h2>
+        <div class="download-info">
+            <div class="info-item">
+                <span class="info-label">📦 حجم التطبيق:</span>
+                <span class="info-value">44.3 ميجابايت</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">🔢 الإصدار:</span>
+                <span class="info-value">1.1</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">📱 متوافق مع:</span>
+                <span class="info-value">أندرويد 5.0 وأحدث</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">🆓 السعر:</span>
+                <span class="info-value">مجاني بالكامل</span>
+            </div>
+        </div>
+        <a href="https://github.com/husseinalhalwas2026-prog/husseinalhalwas.github.io/releases/latest/download/default.apk" class="download-btn">
+            ⬇️ ابدأ التحميل الآن
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>© 2026 تطبيق ملا حسن الخادم - جميع الحقوق محفوظة لدى حسين ال حلواص</p>
+        <p>تم التطوير بكل حب وإخلاص لخدمة أهل البيت عليهم السلام 💚</p>
+    </div>
+
+    <script>
+        // Check for saved theme preference or default to dark mode
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        if (currentTheme === 'light') {
+            document.body.classList.add('light-mode');
+            document.getElementById('theme-icon').textContent = '🌙';
+            document.getElementById('theme-text').textContent = 'الوضع الليلي';
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            
+            let theme = 'dark';
+            let icon = '☀️';
+            let text = 'الوضع النهاري';
+            
+            if (document.body.classList.contains('light-mode')) {
+                theme = 'light';
+                icon = '🌙';
+                text = 'الوضع الليلي';
+            }
+            
+            document.getElementById('theme-icon').textContent = icon;
+            document.getElementById('theme-text').textContent = text;
+            localStorage.setItem('theme', theme);
+        }
+    </script>
+</body>
+</html>
